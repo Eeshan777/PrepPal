@@ -6,11 +6,11 @@ import os
 import sys
 
 if sys.platform == "win32":
-    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("com.yourname.personalfinance.1.0")
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("com.yourname.preppal.1.0")
 
 def get_app_data_path():
     base = os.getenv("LOCALAPPDATA") or os.path.expanduser("~/.myapp")
-    path = os.path.join(base, "PersonalFinance")
+    path = os.path.join(base, "PrepPal")
     os.makedirs(path, exist_ok=True)
     return path
 
@@ -73,14 +73,17 @@ def login_ui(page: ft.Page):
     page.window_maximized = True
     page.window_full_screen = True
     page.scroll = ft.ScrollMode.AUTO
-    page.update()
-    page.clean()
-    page.title = "Personal Finance - Login"
-    page.bgcolor = "#E3F2FD"
-    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.bgcolor = "#FFFFFF"
 
-    username_field = ft.TextField(label="Username", width=350, bgcolor="#FFFFFF", border_radius=8, color="black")
-    password_field = ft.TextField(label="Password", width=350, password=True, bgcolor="#FFFFFF", border_radius=8, color="black")
+    page.bgcolor = None
+    page.background_image = ft.Image(src="https://i.imgur.com/8KqvtzI.jpg", fit=ft.ImageFit.COVER)
+
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.title = "PrepPal - Login"
+    page.clean()
+
+    username_field = ft.TextField(label="Username", width=350, bgcolor="#000000", color="white", border_radius=8)
+    password_field = ft.TextField(label="Password", width=350, password=True, bgcolor="#000000", color="white", border_radius=8)
     message_text = ft.Text("", color="red")
 
     def handle_login(e):
@@ -103,17 +106,31 @@ def login_ui(page: ft.Page):
     username_field.on_submit = handle_enter
     password_field.on_submit = handle_enter
 
-    login_button = ft.ElevatedButton("Login", on_click=handle_login, bgcolor="#1565C0", style=ft.ButtonStyle(color="white"), width=350)
+    button_style = ft.ButtonStyle(
+        bgcolor="#F5D6C6",  # skin color
+        color="black",
+        shape=ft.RoundedRectangleBorder(radius=10),
+        elevation=6,
+        padding=ft.padding.symmetric(vertical=15),
+    )
+
+    login_button = ft.ElevatedButton(
+        "Login",
+        on_click=handle_login,
+        width=350,
+        style=button_style,
+    )
+
     signup_button = ft.TextButton(
         "Create an account",
         on_click=lambda e: (page.clean(), signup_ui(page)),
-        style=ft.ButtonStyle(color="#1565C0")
+        style=ft.ButtonStyle(color="#F5D6C6")
     )
 
     page.add(
         ft.Container(
             content=ft.Column([
-                ft.Text("Personal Finance", size=30, weight=ft.FontWeight.BOLD, color="#0D47A1"),
+                ft.Text("PrepPal", size=32, weight=ft.FontWeight.BOLD, color="#F5D6C6"),
                 username_field,
                 password_field,
                 login_button,
@@ -121,19 +138,19 @@ def login_ui(page: ft.Page):
                 message_text
             ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER),
             padding=30,
-            width=400,
-            bgcolor="white",
+            width=420,
+            bgcolor="#000000",  # black background in container box
             border_radius=12,
-            shadow=ft.BoxShadow(blur_radius=15, color="#B0BEC5")
+            shadow=ft.BoxShadow(blur_radius=15, color="#222222")
         )
     )
 
 def signup_ui(page: ft.Page):
     page.clean()
-    page.title = "Personal Finance - Signup"
+    page.title = "PrepPal - Signup"
 
-    username_field = ft.TextField(label="Username", width=350, bgcolor="#FFFFFF", border_radius=8, color="black")
-    password_field = ft.TextField(label="Password", width=350, password=True, bgcolor="#FFFFFF", border_radius=8, color="black")
+    username_field = ft.TextField(label="Username", width=350, bgcolor="#000000", color="white", border_radius=8)
+    password_field = ft.TextField(label="Password", width=350, password=True, bgcolor="#000000", color="white", border_radius=8)
     message_text = ft.Text("", color="red")
 
     def handle_signup(e):
@@ -156,17 +173,31 @@ def signup_ui(page: ft.Page):
     username_field.on_submit = lambda e: password_field.focus()
     password_field.on_submit = handle_signup
 
-    signup_button = ft.ElevatedButton("Signup", on_click=handle_signup, bgcolor="#2E7D32", style=ft.ButtonStyle(color="white"), width=350)
+    button_style = ft.ButtonStyle(
+        bgcolor="#F5D6C6",  # skin color
+        color="black",
+        shape=ft.RoundedRectangleBorder(radius=10),
+        elevation=6,
+        padding=ft.padding.symmetric(vertical=15),
+    )
+
+    signup_button = ft.ElevatedButton(
+        "Signup",
+        on_click=handle_signup,
+        width=350,
+        style=button_style,
+    )
+
     login_button = ft.TextButton(
         "Already have an account? Login",
         on_click=lambda e: (page.clean(), login_ui(page)),
-        style=ft.ButtonStyle(color="#1565C0")
+        style=ft.ButtonStyle(color="#F5D6C6")
     )
 
     page.add(
         ft.Container(
             content=ft.Column([
-                ft.Text("Create Account", size=30, weight=ft.FontWeight.BOLD, color="#1B5E20"),
+                ft.Text("Create Account", size=32, weight=ft.FontWeight.BOLD, color="#F5D6C6"),
                 username_field,
                 password_field,
                 signup_button,
@@ -174,10 +205,10 @@ def signup_ui(page: ft.Page):
                 message_text
             ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER),
             padding=30,
-            width=400,
-            bgcolor="white",
+            width=420,
+            bgcolor="#000000",
             border_radius=12,
-            shadow=ft.BoxShadow(blur_radius=15, color="#B0BEC5")
+            shadow=ft.BoxShadow(blur_radius=15, color="#222222")
         )
     )
 
@@ -202,29 +233,39 @@ def main_page(page: ft.Page):
         login_ui(page)
 
 def setup_main_ui(page: ft.Page, username: str):
-    page.title = "Personal Finance"
-    page.bgcolor = "#E3F2FD"
+    page.title = "PrepPal"
+    page.bgcolor = None
+    page.background_image = ft.Image(src="https://i.imgur.com/8KqvtzI.jpg", fit=ft.ImageFit.COVER)
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.clean()
 
     button_style = ft.ButtonStyle(
-        bgcolor="#1565C0",
-        color="white",
+        bgcolor="#F5D6C6",
+        color="black",
         shape=ft.RoundedRectangleBorder(radius=10),
-        padding=ft.padding.symmetric(vertical=20, horizontal=20),
+        padding=ft.padding.symmetric(vertical=18),
         elevation=6,
     )
 
     layout = ft.Column([
-        ft.Text("Personal Finance", size=30, weight=ft.FontWeight.BOLD, color="#0D47A1"),
-        ft.Text(f"Welcome, {username}!", size=24, weight=ft.FontWeight.BOLD, color="#003366"),
-        ft.ElevatedButton("Transaction Record", on_click=lambda e: launch_transaction_record(page), style=button_style, width=380),
-        ft.ElevatedButton("Interest Calculator", on_click=lambda e: launch_interest_calculator(page), style=button_style, width=380),
-        ft.ElevatedButton("Budget Report", on_click=lambda e: launch_budget_report(page), style=button_style, width=380),
-        ft.ElevatedButton("Download PDF", on_click=lambda e: launch_download_pdf(page), style=button_style, width=380),
-        ft.ElevatedButton("Logout", on_click=lambda e: logout(page), style=ft.ButtonStyle(color="white"), width=80, bgcolor="#FF0000")
+        ft.Text("PrepPal", size=32, weight=ft.FontWeight.BOLD, color="#F5D6C6"),
+        ft.Text(f"Welcome, {username}!", size=24, weight=ft.FontWeight.BOLD, color="#F5D6C6"),
+        ft.ElevatedButton("Summarize notes", on_click=lambda e: launch_summarize_notes(page), style=button_style, width=380),
+        ft.ElevatedButton("Clarify Doubts", on_click=lambda e: launch_clarify_doubts(page), style=button_style, width=380),
+        ft.ElevatedButton("Practice Questions", on_click=lambda e: launch_practice_questions(page), style=button_style, width=380),
+        ft.ElevatedButton("Logout", on_click=lambda e: logout(page), style=ft.ButtonStyle(color="white", bgcolor="#B00020"), width=100)
     ], spacing=20, alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER)
 
-    page.add(layout)
+    page.add(
+        ft.Container(
+            content=layout,
+            padding=30,
+            width=420,
+            bgcolor="#000000",
+            border_radius=12,
+            shadow=ft.BoxShadow(blur_radius=15, color="#222222")
+        )
+    )
 
 def logout(page: ft.Page):
     try:
@@ -236,34 +277,30 @@ def logout(page: ft.Page):
         print(f"Failed to clear session: {e}")
     login_ui(page)
 
-def launch_transaction_record(page: ft.Page):
-    from TransactionRecord import TransactionRecord
-    view = ft.View(route="/transaction", controls=[], bgcolor="#E3F2FD", scroll=ft.ScrollMode.AUTO)
-    TransactionRecord(page, view)
+def launch_summarize_notes(page: ft.Page):
+    from SummarizeNotes import SummarizeNotes
+    view = ft.View(route="/summarize-notes", controls=[], bgcolor="#E3F2FD", scroll=ft.ScrollMode.AUTO)
+    SummarizeNotes(page, view)
     page.views.append(view)
-    page.go("/transaction")
+    page.go("/summarize-notes")
 
-def launch_interest_calculator(page: ft.Page):
-    from InterestCalculator import InterestCalculator
-    view = ft.View(route="/interest-calculator", controls=[], bgcolor="#E3F2FD", scroll=ft.ScrollMode.AUTO)
-    InterestCalculator(page, view)
+def launch_clarify_doubts(page: ft.Page):
+    from ClarifyDoubts import ClarifyDoubts
+    view = ft.View(route="/clarify-doubts", controls=[], bgcolor="#E3F2FD", scroll=ft.ScrollMode.AUTO)
+    ClarifyDoubts(page, view)
     page.views.append(view)
-    page.go("/interest-calculator")
+    page.go("/clarify-doubts")
 
-def launch_budget_report(page: ft.Page):
-    from BudgetReport import BudgetReport
-    view = ft.View(route="/budget-report", controls=[], bgcolor="#E3F2FD", scroll=ft.ScrollMode.AUTO)
-    BudgetReport(page, view)
+def launch_practice_questions(page: ft.Page):
+    from PracticeQuestions import PracticeQuestions
+    view = ft.View(route="/practice-questions", controls=[], bgcolor="#E3F2FD", scroll=ft.ScrollMode.AUTO)
+    PracticeQuestions(page, view)
     page.views.append(view)
-    page.go("/budget-report")
+    page.go("/practice-questions")
 
-def launch_download_pdf(page: ft.Page):
-    from DownloadPDF import DownloadPDF
-    view = ft.View(route="/download-pdf", controls=[], bgcolor="#E3F2FD", scroll=ft.ScrollMode.AUTO)
-    DownloadPDF(page, view)
-    page.views.append(view)
-    page.go("/download-pdf")
+def main(page: ft.Page):
+    initialize_database()
+    main_page(page)
 
 if __name__ == "__main__":
-    initialize_database()
-    ft.app(target=login_ui)
+    ft.app(target=main, assets_dir="assets")
