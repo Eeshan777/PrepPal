@@ -76,7 +76,7 @@ def login_ui(page: ft.Page):
     page.bgcolor = "#FFFFFF"
 
     page.bgcolor = None
-    page.background_image = ft.Image(src="https://i.imgur.com/8KqvtzI.jpg", fit=ft.ImageFit.COVER)
+    page.background_image = "Background.jpg"
 
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.title = "PrepPal - Login"
@@ -107,7 +107,7 @@ def login_ui(page: ft.Page):
     password_field.on_submit = handle_enter
 
     button_style = ft.ButtonStyle(
-        bgcolor="#F5D6C6",  # skin color
+        bgcolor="#E4956E",  # skin color
         color="black",
         shape=ft.RoundedRectangleBorder(radius=10),
         elevation=6,
@@ -124,13 +124,13 @@ def login_ui(page: ft.Page):
     signup_button = ft.TextButton(
         "Create an account",
         on_click=lambda e: (page.clean(), signup_ui(page)),
-        style=ft.ButtonStyle(color="#F5D6C6")
+        style=ft.ButtonStyle(color="#E4956E")
     )
 
     page.add(
         ft.Container(
             content=ft.Column([
-                ft.Text("PrepPal", size=32, weight=ft.FontWeight.BOLD, color="#F5D6C6"),
+                ft.Text("PrepPal", size=32, weight=ft.FontWeight.BOLD, color="#E4956E"),
                 username_field,
                 password_field,
                 login_button,
@@ -139,7 +139,7 @@ def login_ui(page: ft.Page):
             ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER),
             padding=30,
             width=420,
-            bgcolor="#000000",  # black background in container box
+            bgcolor="#000000",
             border_radius=12,
             shadow=ft.BoxShadow(blur_radius=15, color="#222222")
         )
@@ -174,7 +174,7 @@ def signup_ui(page: ft.Page):
     password_field.on_submit = handle_signup
 
     button_style = ft.ButtonStyle(
-        bgcolor="#F5D6C6",  # skin color
+        bgcolor="#E4956E",  # skin color
         color="black",
         shape=ft.RoundedRectangleBorder(radius=10),
         elevation=6,
@@ -191,13 +191,13 @@ def signup_ui(page: ft.Page):
     login_button = ft.TextButton(
         "Already have an account? Login",
         on_click=lambda e: (page.clean(), login_ui(page)),
-        style=ft.ButtonStyle(color="#F5D6C6")
+        style=ft.ButtonStyle(color="#E4956E")
     )
 
     page.add(
         ft.Container(
             content=ft.Column([
-                ft.Text("Create Account", size=32, weight=ft.FontWeight.BOLD, color="#F5D6C6"),
+                ft.Text("Create Account", size=32, weight=ft.FontWeight.BOLD, color="#E4956E"),
                 username_field,
                 password_field,
                 signup_button,
@@ -235,12 +235,12 @@ def main_page(page: ft.Page):
 def setup_main_ui(page: ft.Page, username: str):
     page.title = "PrepPal"
     page.bgcolor = None
-    page.background_image = ft.Image(src="https://i.imgur.com/8KqvtzI.jpg", fit=ft.ImageFit.COVER)
+    page.background_image = "Background.jpg"
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.clean()
 
     button_style = ft.ButtonStyle(
-        bgcolor="#F5D6C6",
+        bgcolor="#E4956E",
         color="black",
         shape=ft.RoundedRectangleBorder(radius=10),
         padding=ft.padding.symmetric(vertical=18),
@@ -248,13 +248,13 @@ def setup_main_ui(page: ft.Page, username: str):
     )
 
     layout = ft.Column([
-        ft.Text("PrepPal", size=32, weight=ft.FontWeight.BOLD, color="#F5D6C6"),
-        ft.Text(f"Welcome, {username}!", size=24, weight=ft.FontWeight.BOLD, color="#F5D6C6"),
+        ft.Text("PrepPal", size=32, weight=ft.FontWeight.BOLD, color="#E4956E"),
+        ft.Text(f"Welcome, {username}!", size=24, weight=ft.FontWeight.BOLD, color="#E4956E"),
         ft.ElevatedButton("Summarize notes", on_click=lambda e: launch_summarize_notes(page), style=button_style, width=380),
         ft.ElevatedButton("Clarify Doubts", on_click=lambda e: launch_clarify_doubts(page), style=button_style, width=380),
         ft.ElevatedButton("Practice Questions", on_click=lambda e: launch_practice_questions(page), style=button_style, width=380),
         ft.ElevatedButton("Logout", on_click=lambda e: logout(page), style=ft.ButtonStyle(color="white", bgcolor="#B00020"), width=100)
-    ], spacing=20, alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER)
+    ], spacing=20, alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER)
 
     page.add(
         ft.Container(
